@@ -9,7 +9,7 @@ This repository contains the codebase for **MHCAFNet++** (Multi-Hierarchy Channe
 ## 📸 Visual Results
 
 Below is a comparison of hazy inputs, our MHCAFNet++ restored outputs, and the ground truth clear images.
-(<img width="1439" height="2490" alt="Output" src="https://github.com/user-attachments/assets/07f66638-4600-4b42-b739-98a53815d24a" />)
+<img width="1439" height="2490" alt="Output" src="https://github.com/user-attachments/assets/07f66638-4600-4b42-b739-98a53815d24a" />
 
 # MHCAFNet++: Multi-Hierarchy Channel Attention Fusion Network for Image Dehazing
 
