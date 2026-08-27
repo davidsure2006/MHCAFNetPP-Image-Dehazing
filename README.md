@@ -101,3 +101,48 @@ graph TD
         CA_In --> Mult
     end
 ```
+📁 Repository Structure
+Plaintext
+MHCAFNetPP-Image-Dehazing/
+├── assets/              # Images for README
+├── dataset.py           # PyTorch Dataset class for RESIDE-OUT
+├── model.py             # MHCAFNet++ network architecture
+├── train.py             # Training loop and loss functions
+├── test.py              # Inference and evaluation script
+├── requirements.txt     # Python dependencies
+└── README.md
+🚀 Setup Instructions
+Prerequisites
+Python 3.8+
+
+NVIDIA GPU + CUDA Toolkit (Highly recommended for training/inference)
+
+1. Install Dependencies
+Clone the repository and install the required Python packages:
+
+Bash
+git clone [https://github.com/davidsure2006/MHCAFNetPP-Image-Dehazing.git](https://github.com/davidsure2006/MHCAFNetPP-Image-Dehazing.git)
+cd MHCAFNetPP-Image-Dehazing
+pip install -r requirements.txt
+2. Dataset
+This model was trained and evaluated on the RESIDE-OUT dataset.
+You can download the dataset directly from Kaggle here:
+🔗 RESIDE-OUT Dataset on Kaggle
+
+3. Pre-trained Weights
+Download MHCAFNetPP_RESIDE_Final (1).pth from the Releases Page and place it in the project root to run inference without training from scratch.
+
+4. Training the Model
+To train the model from scratch on the RESIDE-OUT dataset:
+
+Bash
+python train.py --data_dir /path/to/dataset --batch_size 16 --epochs 30
+5. Evaluation & Inference
+To evaluate the model or run inference on new hazy images using the pre-trained weights:
+
+Bash
+python test.py --data_dir /path/to/test_images --weights "MHCAFNetPP_RESIDE_Final (1).pth"
+🙏 Acknowledgements
+The RESIDE-OUT dataset creators and Kaggle contributor anshkgoyal.
+
+Inspired by recent advancements in Channel Attention and Global Residual Learning for image restoration.
