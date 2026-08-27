@@ -7,6 +7,65 @@ This model was trained and evaluated on the **RESIDE-OUT** dataset.
 You can download the dataset directly from Kaggle here: 
 🔗 **[RESIDE-OUT Dataset on Kaggle](https://www.kaggle.com/datasets/anshkgoyal/reside-out)**
 
+## Model Architecture
+```mermaid
+graph TD
+    %% Node Styling
+    classDef inputNode fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000
+    classDef encNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+    classDef decNode fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000
+    classDef attNode fill:#fff8e1,stroke:#fbc02d,stroke-width:2px,color:#000
+    classDef outNode fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000
+
+    %% Main Architecture Flow
+    Input("🌫️ Hazy Input Image (3, H, W)"):::inputNode
+
+    subgraph Encoder ["Feature Extraction (Encoder)"]
+        E1("Level 1<br>Conv 3x3 + ReLU + CA Block<br>(64 Channels)"):::encNode
+        E2("Level 2<br>Max Pool + Conv 3x3 + CA Block<br>(128 Channels)"):::encNode
+        E3("Level 3<br>Max Pool + Conv 3x3 + CA Block<br>(256 Channels)"):::encNode
+    end
+
+    subgraph Decoder ["Feature Fusion (Decoder)"]
+        D1("Up-Level 1<br>ConvTranspose + Conv 3x3<br>(128 Channels)"):::decNode
+        D2("Up-Level 2<br>ConvTranspose + Conv 3x3<br>(64 Channels)"):::decNode
+    end
+
+    Final("Final Layer<br>1x1 Conv (3 Channels)<br>☁️ Predicted Haze Map"):::decNode
+    Subtract{"Global Residual<br>Subtraction<br>(Input - Haze)"}:::outNode
+    Output("☀️ Clean Dehazed Image"):::outNode
+
+    %% Core Connections
+    Input --> E1
+    E1 --> E2
+    E2 --> E3
+    E3 --> D1
+    D1 --> D2
+    D2 --> Final
+
+    %% Skip Connections
+    E2 -. "Skip Connection (Concat)" .-> D1
+    E1 -. "Skip Connection (Concat)" .-> D2
+
+    %% Global Residual Connection
+    Input -. "Identity Mapping" .-> Subtract
+    Final --> Subtract
+    Subtract --> Output
+
+    %% Channel Attention Block Zoom-in
+    subgraph CABlock ["🔍 Zoom: Channel Attention (CA) Module"]
+        direction LR
+        CA_In("Input Features"):::attNode
+        GAP("Global Avg Pool"):::attNode
+        Lin("Linear Layers + ReLU + Sigmoid"):::attNode
+        Mult{{"Element-wise<br>Multiply"}}:::attNode
+        
+        CA_In --> GAP
+        GAP --> Lin
+        Lin --> Mult
+        CA_In --> Mult
+    end
+```
 ## Pre-trained Weights
 Pre-trained weights are available in the GitHub Releases section of this repository. 
 Download `MHCAFNetPP_RESIDE_Final (1).pth` from the [Releases Page](../../releases) and place it in the project root to run inference without training from scratch.
