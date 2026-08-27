@@ -1,0 +1,5 @@
+*.pth
+*.docx
+*.ipynb
+__pycache__/
+data/

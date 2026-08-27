@@ -1,0 +1,7 @@
+torch
+torchvision
+torchmetrics
+lpips
+torchsummary
+opencv-python
+tqdm
