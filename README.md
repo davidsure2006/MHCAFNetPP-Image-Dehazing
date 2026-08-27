@@ -35,7 +35,20 @@ graph TD
     classDef attNode fill:#fff8e1,stroke:#fbc02d,stroke-width:2px,color:#000
     classDef outNode fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000
 
+    %% Channel Attention Block Zoom-in
+    subgraph CABlock ["🔍 Zoom: Channel Attention (CA) Module"]
+        direction LR
+        CA_In("Input Features"):::attNode
+        GAP("Global Avg Pool"):::attNode
+        Lin("Linear Layers + ReLU + Sigmoid"):::attNode
+        Mult{{"Element-wise<br>Multiply"}}:::attNode
+        
+        CA_In --> GAP
+        GAP --> Lin
+        Lin --> Mult
+        CA_In --> Mult
     %% Main Architecture Flow
+
     Input("🌫️ Hazy Input Image (3, H, W)"):::inputNode
 
     subgraph Encoder ["Feature Extraction (Encoder)"]
@@ -72,19 +85,6 @@ graph TD
 
     %% INVISIBLE LINK TO FORCE VERTICAL STACKING %%
     Output ~~~ CA_In
-
-    %% Channel Attention Block Zoom-in
-    subgraph CABlock ["🔍 Zoom: Channel Attention (CA) Module"]
-        direction LR
-        CA_In("Input Features"):::attNode
-        GAP("Global Avg Pool"):::attNode
-        Lin("Linear Layers + ReLU + Sigmoid"):::attNode
-        Mult{{"Element-wise<br>Multiply"}}:::attNode
-        
-        CA_In --> GAP
-        GAP --> Lin
-        Lin --> Mult
-        CA_In --> Mult
     end
 ```
 
