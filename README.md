@@ -1,6 +1,4 @@
 ```bash
-# Create the README.md file with the complete project documentation
-cat << 'EOF' > README.md
 # MHCAFNet++: Deep Learning Architecture for Single-Image Dehazing
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
