@@ -26,6 +26,7 @@ Our model achieves state-of-the-art results on the RESIDE OUT benchmark, heavily
 
 ## Model Architecture & Complexity
 
+```mermaid
 graph TD
     %% Node Styling
     classDef inputNode fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000
@@ -85,6 +86,7 @@ graph TD
         Lin --> Mult
         CA_In --> Mult
     end
+```
 
 The network utilizes a modular Block structure with embedded **Channel Attention** mechanisms and is optimized using a **Hybrid Loss Function** (L1 + SSIM + LPIPS) to preserve structural integrity and perceptual quality.
 
