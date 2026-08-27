@@ -7,8 +7,25 @@ This model was trained and evaluated on the **RESIDE-OUT** dataset.
 You can download the dataset directly from Kaggle here: 
 🔗 **[RESIDE-OUT Dataset on Kaggle](https://www.kaggle.com/datasets/anshkgoyal/reside-out)**
 
-## Model Architecture
-```mermaid
+## Pre-trained Weights
+Pre-trained weights are available in the GitHub Releases section of this repository. 
+Download `MHCAFNetPP_RESIDE_Final (1).pth` from the [Releases Page](../../releases) and place it in the project root to run inference without training from scratch.
+
+## Benchmark Results (RESIDE OUT)
+
+Our model achieves state-of-the-art results on the RESIDE OUT benchmark, heavily outperforming previous architectures.
+
+| Model | PSNR (dB) | SSIM |
+| --- | --- | --- |
+| DCP | 19.13 | 0.8148 |
+| AOD-Net | 20.29 | 0.8765 |
+| DehazeNet | 22.46 | 0.8514 |
+| GFN | 21.55 | 0.8444 |
+| FFA-Net | 33.57 | 0.9840 |
+| **Ours (MHCAFNet++)** | **35.42** | **0.9855** |
+
+## Model Architecture & Complexity
+
 graph TD
     %% Node Styling
     classDef inputNode fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000
@@ -52,6 +69,9 @@ graph TD
     Final --> Subtract
     Subtract --> Output
 
+    %% INVISIBLE LINK TO FORCE VERTICAL STACKING %%
+    Output ~~~ CA_In
+
     %% Channel Attention Block Zoom-in
     subgraph CABlock ["🔍 Zoom: Channel Attention (CA) Module"]
         direction LR
@@ -65,25 +85,6 @@ graph TD
         Lin --> Mult
         CA_In --> Mult
     end
-```
-## Pre-trained Weights
-Pre-trained weights are available in the GitHub Releases section of this repository. 
-Download `MHCAFNetPP_RESIDE_Final (1).pth` from the [Releases Page](../../releases) and place it in the project root to run inference without training from scratch.
-
-## Benchmark Results (RESIDE OUT)
-
-Our model achieves state-of-the-art results on the RESIDE OUT benchmark, heavily outperforming previous architectures.
-
-| Model | PSNR (dB) | SSIM |
-| --- | --- | --- |
-| DCP | 19.13 | 0.8148 |
-| AOD-Net | 20.29 | 0.8765 |
-| DehazeNet | 22.46 | 0.8514 |
-| GFN | 21.55 | 0.8444 |
-| FFA-Net | 33.57 | 0.9840 |
-| **Ours (MHCAFNet++)** | **35.42** | **0.9855** |
-
-## Model Architecture & Complexity
 
 The network utilizes a modular Block structure with embedded **Channel Attention** mechanisms and is optimized using a **Hybrid Loss Function** (L1 + SSIM + LPIPS) to preserve structural integrity and perceptual quality.
 
